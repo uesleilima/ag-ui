@@ -129,7 +129,7 @@ export class LangGraphAgent extends AbstractAgent {
     this.graphId = config.graphId;
     this.assistantConfig = config.assistantConfig;
     this.reasoningProcess = null;
-    this.useTransformer = true;
+    this.useTransformer = config.useTransformer ?? true;
     this.client =
       config?.client ??
       new LangGraphClient({
