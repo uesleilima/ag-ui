@@ -45,7 +45,9 @@ import {
   resolveReasoningContent,
   resolveEncryptedReasoningContent,
 } from "@/utils";
-import { ToolMessageFieldsWithToolCallId } from "@langchain/core/dist/messages/tool";
+// `ToolMessageFields` already carries `tool_call_id` — the older
+// `…WithToolCallId` alias was removed from `@langchain/core`.
+import type { ToolMessageFields } from "@langchain/core/dist/messages/tool";
 
 type RunAgentExtendedInput<
   TStreamMode extends StreamMode | StreamMode[] = StreamMode,
@@ -1197,7 +1199,7 @@ export class LangGraphAgent extends AbstractAgent {
         }
 
         if (toolCallOutput && toolCallOutput.update?.messages?.length) {
-          type MessageFields = ToolMessageFieldsWithToolCallId & { type: string }
+          type MessageFields = ToolMessageFields & { type: string }
           toolCallOutput.update?.messages.filter((message: MessageFields) => message.type === 'tool').forEach((message: MessageFields) => {
             if (!this.activeRun!.hasFunctionStreaming) {
               this.dispatchEvent({
